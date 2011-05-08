@@ -78,6 +78,14 @@ class udev_monitor(Structure):
 udev_monitor_p = POINTER(udev_monitor)
 
 
+class udev_queue(Structure):
+    """
+    Dummy for ``udev_queue`` structure.
+    """
+
+udev_queue_p = POINTER(udev_queue)
+
+
 dev_t = c_ulonglong
 
 
@@ -150,7 +158,19 @@ SIGNATURES = {
         receive_device=([udev_monitor_p], udev_device_p),
         filter_add_match_subsystem_devtype=(
             [udev_monitor_p, c_char_p, c_char_p], c_int),
-        filter_add_match_tag=([udev_monitor_p, c_char_p], c_int))
+        filter_add_match_tag=([udev_monitor_p, c_char_p], c_int)),
+    'udev_queue': dict(
+        new=([udev_p], udev_queue_p),
+        unref=([udev_queue_p], None),
+        get_udev_is_active=([udev_queue_p], c_int),
+        get_queue_is_empty=([udev_queue_p], c_int),
+        get_seqnum_is_finished=([udev_queue_p, c_ulonglong], c_int),
+        get_seqnum_sequence_is_finished=([udev_queue_p, c_ulonglong, c_ulonglong],
+                                         c_int),
+        get_queued_list_entry=([udev_queue_p], udev_list_entry_p),
+        get_failed_list_entry=([udev_queue_p], udev_list_entry_p),
+        get_kernel_seqnum=([udev_queue_p], c_ulonglong),
+        get_udev_seqnum=([udev_queue_p], c_ulonglong))
     }
 
 
@@ -187,7 +207,8 @@ ERROR_CHECKERS = dict(
     udev_enumerate_add_match_sysname=check_negative_errorcode,
     udev_enumerate_add_match_is_initialized=check_negative_errorcode,
     udev_monitor_filter_add_match_subsystem_devtype=check_negative_errorcode,
-    udev_monitor_filter_add_match_tag=check_negative_errorcode)
+    udev_monitor_filter_add_match_tag=check_negative_errorcode,
+    udev_queue_get_seqnum_sequence_is_finished=check_negative_errorcode)
 
 
 def load_udev_library():
