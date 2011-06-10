@@ -49,10 +49,13 @@ BLACKLIST = frozenset([
     'udev_set_userdata', 'udev_get_userdata',
     # superfluous, because context is already available in .context
     'udev_enumerate_get_udev', 'udev_monitor_get_udev',
+    'udev_queue_get_udev',
     # superfluous, because Python provides already tools to filter lists
     'udev_device_get_udev', 'udev_list_entry_get_by_name',
     # undocumented in libudev manual
-    'udev_device_get_seqnum'
+    'udev_device_get_seqnum',
+    # not needed
+    'udev_queue_ref',
 ])
 
 
