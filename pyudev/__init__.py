@@ -177,3 +177,4 @@ __all__ = ['Context', 'Device']
 from pyudev.device import *
 from pyudev.core import *
 from pyudev.monitor import *
+from pyudev.queue import *

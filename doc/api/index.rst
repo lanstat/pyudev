@@ -14,6 +14,7 @@ Module contents
    context
    device
    monitor
+   queue
    toolkit
 
 
